@@ -41,3 +41,5 @@ log/.keep
 tmp/.keep
 tmp/pids/.keep
 tmp/storage/.keep
+
+node_modules
