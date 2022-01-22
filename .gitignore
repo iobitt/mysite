@@ -36,3 +36,8 @@
 
 # Игнорируем файл с секретами
 .env
+.ruby-version
+log/.keep
+tmp/.keep
+tmp/pids/.keep
+tmp/storage/.keep
