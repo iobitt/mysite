@@ -1,9 +1,19 @@
 h1 = @article.title
 
-p = @article.body
+- @article.body.split("\n").each do |part|
+  p = part
 
-p = link_to "Редактирование", edit_article_path(@article)
+p
+  = link_to "Редактирование", edit_article_path(@article)
+  = ' | '
+  = link_to "Удалить", article_path(@article), data: { turbo_method: :delete, turbo_confirm: "Вы уверены?" }
+  = ' | '
+  = link_to 'Назад', articles_path
 
-p = link_to "Удалить", article_path(@article), data: { turbo_method: :delete, turbo_confirm: "Вы уверены?" }
+h2 Комментарии
 
-= link_to 'Назад', articles_path
+= render @article.comments
+
+h2 Добавить комментарий
+
+= render 'comments/form'

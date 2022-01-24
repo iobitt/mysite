@@ -1,0 +1,12 @@
+= form_with model: [@article, @article.comments.build] do |form|
+  .mb-3
+    = form.label :commenter, :class => 'form-label'
+    = form.text_field :commenter, :class => 'form-control'
+
+  div
+    = form.label :body, :class => 'form-label'
+    = form.text_area :body, :class => 'form-control'
+
+  div
+    br
+    = form.submit :class => 'btn btn-primary'
