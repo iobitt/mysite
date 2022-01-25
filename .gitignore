@@ -42,4 +42,7 @@ tmp/.keep
 tmp/pids/.keep
 tmp/storage/.keep
 
-node_modules
+node_modules/*
+
+.idea/*
+

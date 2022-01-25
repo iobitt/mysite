@@ -2,3 +2,5 @@ p
   strong = comment.commenter
   br
   = comment.body
+  br
+  = link_to "Удалить", [comment.article, comment], data: { turbo_method: :delete, turbo_confirm: "Вы уверены?" }

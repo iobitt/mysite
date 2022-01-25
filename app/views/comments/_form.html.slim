@@ -8,5 +8,9 @@
     = form.text_area :body, :class => 'form-control'
 
   div
+    = form.label :status, :class => 'form-label'
+    = form.select :status, Visible::VALID_STATUSES, selected: 'public', :class => 'form-control'
+
+  div
     br
     = form.submit :class => 'btn btn-primary'
