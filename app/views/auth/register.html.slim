@@ -1,0 +1,43 @@
+.row
+  .col
+  .col-auto class="auth-form auth-form-first"
+    h3 Регистрация
+    br
+    = form_with model: @user, url: 'register' do |form|
+      .mb-3
+        = form.label :nickname, "Никнейм", :class => 'form-label'
+        = form.text_field :nickname, :class => "form-control #{ field_validation_class(@user, :nickname) }"
+        - @user.errors.full_messages_for(:nickname).each do |message|
+          .invalid-feedback = message
+
+      .mb-3
+        = form.label :email, "E-mail", :class => 'form-label'
+        = form.email_field :email, :class => "form-control #{ field_validation_class(@user, :email) }"
+        - @user.errors.full_messages_for(:email).each do |message|
+          .invalid-feedback = message
+
+      .mb-3
+        = form.label :password, "Пароль", :class => 'form-label'
+        = form.password_field :password, :class => "form-control #{ field_validation_class(@user, :password) }", :required => true
+        - @user.errors.full_messages_for(:password).each do |message|
+          .invalid-feedback = message
+
+      div
+        = form.label :password_confirmation, "Пароль ещё раз", :class => 'form-label'
+        = form.password_field :password_confirmation, :class => "form-control #{ field_validation_class(@user, :password_confirmation) }"
+        - @user.errors.full_messages_for(:password_confirmation).each do |message|
+          .invalid-feedback = message
+
+      div
+        br
+        = form.submit "Зарегистрироваться", :class => 'btn btn-primary auth-form-btn'
+  .col
+
+.row
+  .col
+  .col-auto class="auth-form auth-form-second"
+    span
+      | Уже зарегистрированы?
+      = ' '
+      a href='/login' Войдите
+  .col

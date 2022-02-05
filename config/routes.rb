@@ -7,4 +7,11 @@ Rails.application.routes.draw do
   resources :articles do
     resources :comments
   end
+
+  # /auth
+  get '/register', to: 'auth#register'
+  post '/register', to: 'auth#register'
+  get '/login', to: 'auth#login'
+  post '/login', to: 'auth#login'
+  get '/logout', to: 'auth#logout'
 end

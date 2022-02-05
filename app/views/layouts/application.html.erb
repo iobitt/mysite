@@ -14,7 +14,11 @@
   </head>
 
   <body>
-    <%= render 'layouts/navbar' %>
+    <% if params[:controller] == 'auth' %>
+      <%= render 'auth/navbar' %>
+    <% else %>
+      <%= render 'layouts/navbar' %>
+    <% end %>
 
     <div class="container">
       <%= yield %>

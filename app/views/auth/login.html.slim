@@ -1,0 +1,29 @@
+.row
+  .col
+  .col-auto class="auth-form auth-form-first"
+    h3 Вход
+    br
+    = form_with url: 'login' do |form|
+      .mb-3
+        = form.label :email, 'E-mail', :class => 'form-label'
+        = form.text_field :email, :value => params[:email], :class => 'form-control'
+
+      div
+        = form.label :password, 'Пароль', :class => 'form-label'
+        = form.password_field :password, :value => params[:password], :class => 'form-control'
+        - if params[:email] || params[:password]
+          .text-danger Не правильный e-mail или пароль
+
+      div
+        br
+        = form.submit 'Войти', :class => 'btn btn-primary auth-form-btn'
+  .col
+
+.row
+  .col
+  .col-auto class="auth-form auth-form-second"
+    span
+      | Ещё нет аккаунта?
+      = ' '
+      a href='/register' Зарегистрируйтесь
+  .col

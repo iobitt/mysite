@@ -21,6 +21,8 @@ services:
     image: postgres:12.1
     volumes:
       - db_data:/var/lib/postgresql/data
+    ports:
+      - "8889:5432"
   redis:
       image: redis:5.0.7
   sidekiq:

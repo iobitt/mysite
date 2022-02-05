@@ -1,0 +1,38 @@
+/* Стили для страниц авторизации */
+
+.auth-navbar
+{
+    height: 68px;
+    background-color: #fff;
+    border-bottom: 1px solid #d5dddf;
+    margin-bottom: 24px;
+}
+
+.auth-form
+{
+    width: 440px;
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.auth-form-first
+{
+    margin-top: 80px;
+    padding: 40px;
+}
+
+.auth-form-second
+{
+    margin-top: 16px;
+    padding: 15px 15px;
+    text-align: center;
+}
+
+.auth-form-btn
+{
+    width: 100%;
+    padding: 0;
+    height: 48px;
+}
