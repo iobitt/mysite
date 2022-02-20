@@ -5,7 +5,7 @@ class CreateTasks < ActiveRecord::Migration[7.0]
       t.text :title, null: false
       t.text :description
       t.references :parent, foreign_key: { to_table: :tasks }
-      t.datetime :desired_date
+      t.datetime :desired_at
       t.datetime :deadline
       t.datetime :completed
       t.timestamps
