@@ -1,0 +1,22 @@
+= form_with model: task do |form|
+  .mb-3
+    = form.label :title, "Название", :class => 'form-label'
+    = form.text_field :title, :class => "form-control #{ field_validation_class(task, :title) }"
+    - task.errors.full_messages.each do |message|
+      .invalid-feedback = message
+
+  div
+    = form.label :description, 'Описание', :class => 'form-label'
+    = form.text_area :description, :value => params[:description], :class => 'form-control'
+
+  div
+    = form.label :desired_at, 'Желательный срок выполнения', :class => 'form-label'
+    = form.datetime_field :desired_at, :class => 'form-control'
+
+  div
+    = form.label :deadline, 'Крайний срок выполнения', :class => 'form-label'
+    = form.datetime_field :deadline, :class => 'form-control'
+
+  div
+    br
+    = form.submit 'Сохранить', :class => 'btn btn-primary auth-form-btn'

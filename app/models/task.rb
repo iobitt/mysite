@@ -6,5 +6,11 @@ class Task < ApplicationRecord
   belongs_to :parent, class_name: "Task", optional: true
 
   validates :title, presence: true
-  validates :deadline, comparison: { greater_than: :desired_data }
+  validates :deadline, comparison: { greater_than: :desired_at }, if: -> { deadline && desired_at }
+
+  scope :uncompleted, -> { where('completed is null') }
+
+  def complete?
+    !!completed
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_01_202635) do
+ActiveRecord::Schema.define(version: 2022_02_19_191007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2022_02_01_202635) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "status", default: "public", null: false
+    t.text "type", default: "Article::Post", null: false
   end
 
   create_table "comments", force: :cascade do |t|
@@ -31,6 +32,45 @@ ActiveRecord::Schema.define(version: 2022_02_01_202635) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "status", default: "public", null: false
     t.index ["article_id"], name: "index_comments_on_article_id"
+  end
+
+  create_table "intervals", force: :cascade do |t|
+    t.bigint "task_id", null: false
+    t.datetime "start_at", precision: 6
+    t.datetime "end_at", precision: 6
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["task_id"], name: "index_intervals_on_task_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.text "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id", "name"], name: "index_tags_on_user_id_and_name", unique: true
+    t.index ["user_id"], name: "index_tags_on_user_id"
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.text "title", null: false
+    t.text "description"
+    t.bigint "parent_id"
+    t.datetime "desired_at", precision: 6
+    t.datetime "deadline", precision: 6
+    t.datetime "completed", precision: 6
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["parent_id"], name: "index_tasks_on_parent_id"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
+  end
+
+  create_table "tasks_tags", id: false, force: :cascade do |t|
+    t.bigint "task_id"
+    t.bigint "tag_id"
+    t.index ["tag_id"], name: "index_tasks_tags_on_tag_id"
+    t.index ["task_id"], name: "index_tasks_tags_on_task_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -44,4 +84,8 @@ ActiveRecord::Schema.define(version: 2022_02_01_202635) do
   end
 
   add_foreign_key "comments", "articles"
+  add_foreign_key "intervals", "tasks"
+  add_foreign_key "tags", "users"
+  add_foreign_key "tasks", "tasks", column: "parent_id"
+  add_foreign_key "tasks", "users"
 end

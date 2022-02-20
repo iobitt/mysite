@@ -1,0 +1,25 @@
+.row
+  .col-sm-2
+    h1 tags
+  .col-sm-10
+    .container-fluid
+      .row
+        .col
+          = link_to "Создать", new_task_path, class: "btn btn-primary"
+      .row
+        .col
+          - @tasks.each do |task|
+            .card style="width: 60%"
+              .card-body
+                h5 class="card-title" = task.title
+                p class="card-text"
+                  = task.description
+              ul class="list-group list-group-flush"
+                - if task.deadline
+                  li class="list-group-item text-danger" Крайний срок: #{task.deadline}
+                - if task.desired_at
+                  li class="list-group-item text-warning text-decoration-line-through" Желательный срок: #{task.desired_at}
+              .card-body
+                - unless task.complete?
+                  = link_to "Завершить", complete_task_path(task)
+                a href="#" class="card-link" Изменить
