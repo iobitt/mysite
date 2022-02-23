@@ -5,11 +5,11 @@
     - task.errors.full_messages.each do |message|
       .invalid-feedback = message
 
-  div
+  .mb-3
     = form.label :description, 'Описание', :class => 'form-label'
-    = form.text_area :description, :value => params[:description], :class => 'form-control'
+    = form.text_area :description, :class => 'form-control'
 
-  div
+  .mb-3
     = form.label :desired_at, 'Желательный срок выполнения', :class => 'form-label'
     = form.datetime_field :desired_at, :class => 'form-control'
 

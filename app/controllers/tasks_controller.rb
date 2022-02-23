@@ -19,8 +19,20 @@ class TasksController < ApplicationController
     end
   end
 
+  def edit
+    task
+  end
+
+  def update
+    if task.update(task_params)
+      redirect_to tasks_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   def complete
-    if resource.update(completed: Time.zone.now)
+    if task.update(completed: Time.zone.now)
       # TODO: сделать вывод в представлении
       flash[:notice] = 'Задача успешно завершена'
     else
@@ -31,8 +43,8 @@ class TasksController < ApplicationController
 
   private
 
-  def resource
-    @resource ||= @current_user.tasks.find(params[:id])
+  def task
+    @task ||= @current_user.tasks.find(params[:id])
   end
 
   def task_params
