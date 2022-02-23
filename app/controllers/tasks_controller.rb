@@ -1,5 +1,7 @@
 class TasksController < ApplicationController
 
+  helper_method :intervals
+
   def index
     @tasks = @current_user.tasks.uncompleted.all
   end
@@ -13,7 +15,7 @@ class TasksController < ApplicationController
 
     # TODO: desired_at, deadline сохраняются с неверным смещением времени
     if @task.save
-      redirect_to tasks_path
+      redirect_to edit_task_path(@task)
     else
       render :new, status: :unprocessable_entity
     end
@@ -45,6 +47,10 @@ class TasksController < ApplicationController
 
   def task
     @task ||= @current_user.tasks.find(params[:id])
+  end
+
+  def intervals
+    task.intervals.order(:start_at)
   end
 
   def task_params

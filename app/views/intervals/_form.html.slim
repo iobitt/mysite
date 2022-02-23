@@ -1,0 +1,16 @@
+= form_with model: interval do |form|
+  - interval.start_at = Time.zone.now
+  - interval.end_at = Time.zone.now
+  = form.hidden_field :task_id, :value => interval.task_id
+
+  .mb-3
+    = form.label :start_at, 'Начало', :class => 'form-label'
+    = form.datetime_local_field :start_at, :class => 'form-control'
+
+  div
+    = form.label :end_at, 'Окончание', :class => 'form-label'
+    = form.datetime_local_field :end_at, :class => 'form-control'
+
+  div
+    br
+    = form.submit 'Сохранить', :class => 'btn btn-primary auth-form-btn'

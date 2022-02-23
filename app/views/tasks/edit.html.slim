@@ -1,9 +1,32 @@
 .row
   .col
-
+  .col-auto class="auth-form auth-form-first"
+    h3 Дочерние задачи
+  .col
   .col-auto class="auth-form auth-form-first"
     h3 Редактирование задачи
     br
     = render "form", task: @task
   .col
+  .col-auto class='auth-form auth-form-first'
+    h3 Время выполнения
 
+    br
+    button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addIntervalModal" Добавить
+
+    div class="modal fade" id="addIntervalModal" tabindex="-1" aria-labelledby="addIntervalModalLabel" aria-hidden="true"
+      .modal-dialog class="modal-dialog-centered"
+        .modal-content
+          .modal-header
+            h5 class="modal-title" id="addIntervalModalLabel" Добавить время выполнения
+            button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          .modal-body
+            = render "intervals/form", interval: @task.intervals.new
+
+    br
+    br
+    ul class="list-group"
+      - intervals.each do |interval|
+        - next unless interval.id
+        li class="list-group-item #{decoration_for(interval)}" = interval_formatter(interval)
+  .col

@@ -20,4 +20,6 @@ Rails.application.routes.draw do
       get 'complete'
     end
   end
+
+  resources :intervals
 end
