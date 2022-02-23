@@ -1,7 +1,7 @@
 .row
-  .col-sm-2
-    h1 tags
-  .col-sm-10
+  .col-sm
+    h1 Теги
+  .col-sm-auto
     .container-fluid
       .row
         .col
@@ -9,7 +9,7 @@
       .row
         .col
           - @tasks.each do |task|
-            .card style="width: 60%"
+            .card style="width: 800px"
               .card-body
                 h5 class="card-title" = task.title
                 p class="card-text"
@@ -22,4 +22,6 @@
               .card-body
                 - unless task.complete?
                   = link_to "Завершить", complete_task_path(task)
-                a href="#" class="card-link" Изменить
+                  = link_to "Изменить", edit_task_path(task)
+  .col-sm
+    h1 Фильтры
