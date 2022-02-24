@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
 
-  helper_method :intervals
+  helper_method :intervals, :subtasks
 
   def index
     @tasks = @current_user.tasks.uncompleted.all
@@ -13,7 +13,6 @@ class TasksController < ApplicationController
   def create
     @task = @current_user.tasks.new(task_params)
 
-    # TODO: desired_at, deadline сохраняются с неверным смещением времени
     if @task.save
       redirect_to edit_task_path(@task)
     else
@@ -34,7 +33,7 @@ class TasksController < ApplicationController
   end
 
   def complete
-    if task.update(completed: Time.zone.now)
+    if task.complete
       # TODO: сделать вывод в представлении
       flash[:notice] = 'Задача успешно завершена'
     else
@@ -49,11 +48,15 @@ class TasksController < ApplicationController
     @task ||= @current_user.tasks.find(params[:id])
   end
 
+  def subtasks
+    @subtasks = task.subtasks
+  end
+
   def intervals
     task.intervals.order(:start_at)
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :desired_at, :deadline)
+    params.require(:task).permit(:title, :description, :parent_id, :desired_at, :deadline)
   end
 end

@@ -14,4 +14,8 @@ module TasksHelper
       ''
     end
   end
+
+  def subtask_decoration(subtask)
+    subtask.completed ? 'text-success' : ''
+  end
 end

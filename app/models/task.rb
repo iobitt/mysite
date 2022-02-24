@@ -13,4 +13,9 @@ class Task < ApplicationRecord
   def complete?
     !!completed
   end
+
+  def complete
+    subtasks.each { |subtask| subtask.complete }
+    update(completed: Time.zone.now)
+  end
 end

@@ -1,4 +1,6 @@
 = form_with model: task do |form|
+  = form.hidden_field :parent_id, :value => params[:parent_id]
+
   .mb-3
     = form.label :title, "Название", :class => 'form-label'
     = form.text_field :title, :class => "form-control #{ field_validation_class(task, :title) }"

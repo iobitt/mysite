@@ -2,6 +2,14 @@
   .col
   .col-auto class="auth-form auth-form-first"
     h3 Дочерние задачи
+    = link_to "Создать", new_task_path + "?parent_id=#{@task.id}", class: "btn btn-primary"
+    br
+    br
+    ul class="list-group"
+      - subtasks.each do |subtask|
+        li class="list-group-item"
+          = link_to subtask.title, edit_task_path(subtask), :class => subtask_decoration(subtask)
+
   .col
   .col-auto class="auth-form auth-form-first"
     h3 Редактирование задачи
