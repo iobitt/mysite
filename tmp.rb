@@ -1,3 +1,4 @@
 puts 'Ещё какой-то ruby файл'
-a = 11
+a = 999
 puts a
+puts 'Hi!'
