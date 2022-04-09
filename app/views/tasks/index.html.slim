@@ -1,27 +1,36 @@
 .row
-  .col-sm
-    h1 Теги
+  .col-sm.tags
+    = render 'tags/tags_list'
+
   .col-sm-auto
     .container-fluid
       .row
         .col
-          = link_to "Создать", new_task_path, class: "btn btn-primary"
+          .new-task
+            form method='get' action="#{new_task_path}"
+              input class="task-name" name='title' placeholder='Задача...'
+              input type="submit" class="btn" value='Создать' hidden=true
+
       .row
         .col
           - @tasks.each do |task|
-            .card style="width: 800px"
+            .card.task-card style="width: 800px"
               .card-body
                 h5 class="card-title" = task.title
                 p class="card-text"
                   = task.description
-              ul class="list-group list-group-flush"
-                - if task.deadline
-                  li class="list-group-item text-danger" Крайний срок: #{task.deadline}
-                - if task.desired_at
-                  li class="list-group-item text-warning text-decoration-line-through" Желательный срок: #{task.desired_at}
+
+              - if task.tags.present?
+                .card-body
+                  - task.tags.each do |tag|
+                    span.task-card-tag = tag.name
+
               .card-body
-                - unless task.complete?
-                  = link_to "Завершить", complete_task_path(task)
-                  = link_to "Изменить", edit_task_path(task)
+                a.task-card-action href="#{complete_task_path(task)}"
+                  = render 'tags/all_icon'
+                a.task-card-action href="#{edit_task_path(task)}"
+                  = render 'tags/change_icon'
+                a.task-card-action href='#'
+                  = render 'tags/basket_icon'
   .col-sm
-    h1 Фильтры
+    / h1 Фильтры

@@ -1,0 +1,21 @@
+.tags-list
+  a href='?' class="#{tag_class(active_tag, nil)}"
+    = render 'tags/all_icon'
+    span Все
+
+  - tags.each do |tag|
+    a href="#{tag_link(tag)}" class="#{tag_class(active_tag, tag)}"
+      = render 'tags/tag_icon'
+      span = tag.name
+
+  a href="#{tags_path}"
+    = render 'tags/change_icon'
+    span Изменение тегов
+
+  a href="#"
+    = render 'tags/archive_icon'
+    span Архив
+
+  a href="#"
+    = render 'tags/basket_icon'
+    span Корзина

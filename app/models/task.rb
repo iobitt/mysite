@@ -1,7 +1,8 @@
 class Task < ApplicationRecord
   has_one :user
   has_many :intervals
-  has_and_belongs_to_many :tags
+  has_many :tasks_tags
+  has_many :tags, through: :tasks_tags
   has_many :subtasks, class_name: "Task", foreign_key: "parent_id"
   belongs_to :parent, class_name: "Task", optional: true
 

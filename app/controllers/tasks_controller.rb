@@ -1,13 +1,17 @@
 class TasksController < ApplicationController
 
-  helper_method :intervals, :subtasks
+  helper_method :intervals, :subtasks, :tags, :active_tag
 
   def index
-    @tasks = @current_user.tasks.uncompleted.all
+    if active_tag
+      @tasks = active_tag.tasks.uncompleted
+    else
+      @tasks = @current_user.tasks.uncompleted
+    end
   end
 
   def new
-    @task = @current_user.tasks.new
+    @task = @current_user.tasks.new(title: params[:title])
   end
 
   def create
@@ -54,6 +58,14 @@ class TasksController < ApplicationController
 
   def intervals
     task.intervals.order(:start_at)
+  end
+
+  def tags
+    @tags ||= @current_user.tags.order(:name)
+  end
+
+  def active_tag
+    @active_tag ||= tags.find_by(id: params[:tag_id])
   end
 
   def task_params

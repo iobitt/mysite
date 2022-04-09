@@ -1,0 +1,11 @@
+= form_with model: tag do |form|
+
+  .mb-3
+    = form.label :name, "Название", :class => 'form-label'
+    = form.text_field :name, :class => "form-control #{ field_validation_class(tag, :name) }"
+    - tag.errors.full_messages.each do |message|
+      .invalid-feedback = message
+
+  div
+    br
+    = form.submit 'Сохранить', :class => 'btn btn-primary auth-form-btn'

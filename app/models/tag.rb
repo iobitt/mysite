@@ -1,6 +1,7 @@
 class Tag < ApplicationRecord
   has_one :user
-  has_and_belongs_to_many :tasks
+  has_many :tasks_tags
+  has_many :tasks, through: :tasks_tags
 
   validates :user_id, presence: true
   validates :name, presence: true, uniqueness: { scope: :user }

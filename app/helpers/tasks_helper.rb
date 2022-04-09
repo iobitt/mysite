@@ -18,4 +18,13 @@ module TasksHelper
   def subtask_decoration(subtask)
     subtask.completed ? 'text-success' : ''
   end
+
+  def tag_link(tag)
+    "?tag_id=#{tag.id}"
+  end
+
+  def tag_class(active_tag, tag)
+    return 'active-tag' if active_tag.nil? && tag.nil?
+    active_tag&.id == tag&.id ? 'active-tag' : ''
+  end
 end
