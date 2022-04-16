@@ -2,8 +2,8 @@
   .col-sm.tags
     = render 'tags/tags_list'
 
-  .col-sm-auto
-    .container-fluid
+  .col-sm
+    .container
       .row
         .col
           .new-task
@@ -14,9 +14,20 @@
       .row
         .col
           - @tasks.each do |task|
-            .card.task-card style="width: 800px"
+            .card.task-card
               .card-body
                 h5 class="card-title" = task.title
+                p class="card-text"
+                  - if task.completed
+                    span.text-success = "#{l(task.completed, format: "%e %B %Y")}, #{lost_time(task.completed)}"
+                  - if task.desired_at
+                    - if task.completed
+                      br
+                    span.text-warning = "#{l(task.desired_at, format: "%e %B %Y")}, #{lost_time(task.desired_at)}"
+                  - if task.deadline
+                    - if task.desired_at
+                      br
+                    span.text-danger = "#{l(task.deadline, format: "%e %B %Y")}, #{lost_time(task.deadline)}"
                 p class="card-text"
                   = task.description
 
@@ -28,6 +39,8 @@
               .card-body
                 a.task-card-action href="#{complete_task_path(task)}"
                   = render 'tags/all_icon'
+                a.task-card-action href="#{tasks_path}?parent_id=#{task.id}"
+                  = render 'tags/tag_icon'
                 a.task-card-action href="#{edit_task_path(task)}"
                   = render 'tags/change_icon'
                 a.task-card-action href='#'

@@ -38,3 +38,13 @@
         - next unless interval.id
         li class="list-group-item #{decoration_for(interval)}" = interval_formatter(interval)
   .col
+
+.row
+  .col
+  .col-auto class="auth-form auth-form-first"
+    = form_with url: add_tag_task_path do |form|
+      = form.collection_select :tag_id, Tag.order(:name), :id, :name, :class => "form-control"
+      = form.submit 'Добавить', :class => 'btn btn-primary'
+    - @task.tags.each do |tag|
+      span.task-card-tag = tag.name
+  .col

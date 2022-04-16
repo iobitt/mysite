@@ -3,16 +3,32 @@
     = render 'tags/all_icon'
     span Все
 
+  a href="#{tasks_path}?desired_at=today"
+    = render 'tags/all_icon'
+    span Сегодня
+
+  a href="#{tasks_path}?desired_at=3day"
+    = render 'tags/all_icon'
+    span 3 дня
+
+  a href="#{tasks_path}?desired_at=week"
+    = render 'tags/all_icon'
+    span Неделя
+
   - tags.each do |tag|
     a href="#{tag_link(tag)}" class="#{tag_class(active_tag, tag)}"
       = render 'tags/tag_icon'
       span = tag.name
 
+  a href="#{new_tag_path}"
+    = render 'tags/change_icon'
+    span Новый тег
+
   a href="#{tags_path}"
     = render 'tags/change_icon'
     span Изменение тегов
 
-  a href="#"
+  a href="#{tasks_path}?completed"
     = render 'tags/archive_icon'
     span Архив
 

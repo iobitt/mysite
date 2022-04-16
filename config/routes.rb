@@ -18,9 +18,11 @@ Rails.application.routes.draw do
   resources :tasks do
     member do
       get 'complete'
+      post 'add_tag'
     end
   end
 
   resources :intervals
   resources :tags
+  resources :tree
 end

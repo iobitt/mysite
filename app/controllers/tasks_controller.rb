@@ -3,10 +3,33 @@ class TasksController < ApplicationController
   helper_method :intervals, :subtasks, :tags, :active_tag
 
   def index
+    if params[:parent_id].present?
+      task = @current_user.tasks.find(params[:parent_id])
+      @tasks = [task] + task.subtasks
+      return
+    end
+
     if active_tag
-      @tasks = active_tag.tasks.uncompleted
+      @tasks = active_tag.tasks
     else
-      @tasks = @current_user.tasks.uncompleted
+      @tasks = @current_user.tasks
+    end
+
+    if params[:desired_at].present?
+      case params[:desired_at]
+      when 'today'
+        @tasks = @tasks.where('desired_at < ?', Time.zone.tomorrow)
+      when '3day'
+        @tasks = @tasks.where('desired_at < ?', Time.zone.today + 3.days)
+      when 'week'
+        @tasks = @tasks.where('desired_at < ?', Time.zone.today + 7.days)
+      end
+    end
+
+    if params.key? :completed
+      @tasks = @tasks.completed.order(completed: :desc)
+    else
+      @tasks = @tasks.uncompleted.order(:desired_at, :deadline)
     end
   end
 
@@ -16,8 +39,13 @@ class TasksController < ApplicationController
 
   def create
     @task = @current_user.tasks.new(task_params)
+    if @task.parent
+      @task.desired_at ||= @task.parent.desired_at
+      @task.deadline ||= @task.parent.deadline
+    end
 
     if @task.save
+      @task.tags << @task.parent.tags if @task.parent
       redirect_to edit_task_path(@task)
     else
       render :new, status: :unprocessable_entity
@@ -44,6 +72,19 @@ class TasksController < ApplicationController
       flash[:error] = 'Не удалось завершить задачу'
     end
     redirect_to tasks_path
+  end
+
+  def add_tag
+    tag = @current_user.tags.find(params[:tag_id])
+    tasks_tags = TasksTag.where(tag_id: tag.id, task_id: task.id)
+    # TODO: удалять нормально
+    if tasks_tags.present?
+      tasks_tags.delete_all
+    else
+      task.tags << tag
+    end
+    # TODO: сделать через render
+    redirect_to task_path(task)
   end
 
   private
