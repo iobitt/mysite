@@ -1,0 +1,9 @@
+html
+  head
+    title 'Дерево задач'
+    = stylesheet_link_tag 'base'
+    = stylesheet_link_tag 'Spacetree'
+    = javascript_include_tag 'jit.js'
+    = javascript_include_tag 'example1.js'
+body onload="getTasks();"
+  = yield
